@@ -39,15 +39,16 @@ func NewGistRequest() *GistRequest {
 	}
 }
 
-func (req *GistRequest) AddContent(execDir, fileName string) error{
+func (req *GistRequest) AddContent(execDir, fileName string) error {
 	path := filepath.Join(execDir, fileName)
+	escapedFileName := filepath.Base(path)
 
 	fileContent, err := os.ReadFile(path)
 	if err != nil {
 		return err
 	}
 
-	req.Files[fileName] = GistRequestFile{Content: string(fileContent)}
+	req.Files[escapedFileName] = GistRequestFile{Content: string(fileContent)}
 	return nil
 }
 
