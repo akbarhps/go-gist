@@ -5,7 +5,9 @@ import (
 	"github.com/atotto/clipboard"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
+	"runtime"
 )
 
 type Config struct {
@@ -19,7 +21,12 @@ var config *Config
 func init() {
 	args = parseArgs()
 
-	content, err := os.ReadFile("./config.json")
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		log.Fatal("No caller information")
+	}
+
+	content, err := os.ReadFile(path.Join(path.Dir(filename), "config.json"))
 	if err != nil {
 		log.Fatal(err)
 	}
