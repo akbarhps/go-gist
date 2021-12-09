@@ -10,8 +10,12 @@ Simple CLI application to create and delete github gist.
 
 - Build  
 ```bash
-go tidy .
+go mod tidy
+```
 
+then
+
+```bash
 go build .
 ```
 
