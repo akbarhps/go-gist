@@ -4,38 +4,64 @@ Simple CLI application to create and delete github gist.
 
 ## Installation
 
+- Create your [Github Gist Token](https://github.com/settings/tokens)
+
 - Open `http.go` file, and add your token in `Authorization` header
 
-- Run ```bash go build . ```
+- Build  
+```bash
+go tidy .
+
+go build .
+```
 
 ## Usage
 
 ```
-~\..\test
-➜ go-gist
-2021/12/08 22:41:40 HELP:
+➜ go run .
+2021/12/09 11:07:31 HELP:
+'-cd' create gist from files in specified directory from executed app directory
+example:
 
-to create gist, use:
-        gist -c file1 file2 file3
+        go-gist -cd [dirName]
 
-to delete gist, user:
-        gist -d gistId1 gistId2
+'-cf' create gist from files in executed app directory
+example:
 
-to do both, use:
-        gist -c file1 file2 -d gistId1 gistId2
+        go-gist -cf [file1] [file2]
+
+'-cfm' create gist from files in executed app directory, merged into 1 gist
+example:
+
+        go-gist -cfm [file1] [file2]
+
+'-cc' create gist from clipboard
+example:
+
+        go-gist -f=[fileName (optional)] -cc
+
+'-d' delete remote gist
+example:
+
+        go-gist -d [gistId]
+
+'-c' save created gist id and url to clipboard
+example:
+
+        go-gist -c -cf [file1]
+
 ```
 
 ## Example
 
 ```bash
-go-gist -c test.go
+go-gist -c -cf test.go
 ```
 
 Output:
 
 ```bash
-~\..\test
-➜ go run . -c test.go
+➜ go run . -c -cf test.go
 2021/12/08 22:40:18 Id: 4d67ace8ac028a515ced11e397681aed | Url: https://gist.github.com/4d67ace8ac028a515ced11e397681aed
 ```
 

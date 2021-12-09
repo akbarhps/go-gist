@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -39,7 +40,26 @@ func NewGistRequest() *GistRequest {
 	}
 }
 
-func (req *GistRequest) AddContent(execDir, fileName string) error {
+func (req *GistRequest) AddContentFromDir(dir string) error {
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+
+		err = req.AddContentFromFile(dir, file.Name())
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (req *GistRequest) AddContentFromFile(execDir, fileName string) error {
 	path := filepath.Join(execDir, fileName)
 	escapedFileName := filepath.Base(path)
 
