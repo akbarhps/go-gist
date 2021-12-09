@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"os"
-	"strings"
+	"path/filepath"
 )
 
 var (
@@ -50,6 +50,7 @@ func parseArgs() *Args {
 			continue
 		case "-cc":
 			currentState = stateCreateFromClipboard
+			continue
 		case "-d":
 			currentState = stateDelete
 			continue
@@ -58,9 +59,9 @@ func parseArgs() *Args {
 			continue
 		}
 
-		switch {
-		case strings.HasPrefix(arg, "-f"):
-			content = strings.Replace(arg, "-f=", "", 1)
+		switch currentState {
+		case stateCreateFromClipboard:
+			content = filepath.Base(arg)
 		}
 
 		args.StateData[currentState] = append(args.StateData[currentState], content)

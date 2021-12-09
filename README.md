@@ -42,7 +42,7 @@ example:
 '-cc' create gist from clipboard
 example:
 
-        go-gist -f=[fileName (optional)] -cc
+        go-gist -cc [fileName (optional)]
 
 '-d' delete remote gist
 example:
@@ -69,4 +69,12 @@ Output:
 2021/12/08 22:40:18 Id: 4d67ace8ac028a515ced11e397681aed | Url: https://gist.github.com/4d67ace8ac028a515ced11e397681aed
 ```
 
-## 
+## Using Vim Command
+
+`.vimrc`:
+```
+vnoremap <space>0 "+y :!go-gist -c -cc %<CR>
+```
+
+- make sure you set `go-gist` folder in environment path  
+- output automatically write to clipboard
