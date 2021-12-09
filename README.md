@@ -86,7 +86,7 @@ go-gist -s -f test.go
     {
       "label": "gist last clipboard",
       "type":"shell",
-      "command": "gist -s -c ${fileBasename}"
+      "command": "go-gist -s -c ${fileBasename}"
     }
   ]
 }
