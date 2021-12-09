@@ -72,7 +72,6 @@ go-gist -s -f test.go
 # Automate Go-Gist
 
 - make sure you set `go-gist` folder in environment path
-- output automatically write to clipboard
 
 ## Using VSCode
 
