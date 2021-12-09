@@ -1,16 +1,34 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/atotto/clipboard"
 	"log"
+	"os"
 	"path/filepath"
 )
 
+type Config struct {
+	Token string `json:"token"`
+}
+
 var gist *Gist
 var args *Args
+var config *Config
 
 func init() {
 	args = parseArgs()
+
+	content, err := os.ReadFile("./config.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = json.Unmarshal(content, &config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	gist = &Gist{}
 }
 
@@ -73,6 +91,10 @@ func createAndPrintGist(gistRequest *GistRequest) {
 	gistResponse, err := gist.Create(gistRequest)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if gistResponse.Message != "" {
+		log.Fatal("Error: ", gistResponse.Message)
 	}
 
 	log.Println(gistResponse.ToString())

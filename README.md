@@ -6,7 +6,7 @@ Simple CLI application to create and delete github gist.
 
 - Create your [Github Gist Token](https://github.com/settings/tokens)
 
-- Open `http.go` file, and add your token in `Authorization` header
+- Open `config.json` file, and add your token to `token` field.
 
 - Build  
 ```bash
@@ -22,50 +22,50 @@ go build .
 ## Usage
 
 ```
-➜ go run .
-2021/12/09 11:07:31 HELP:
-'-cd' create gist from files in specified directory from executed app directory
+2021/12/09 16:12:19 HELP:
+'-dir' create gist from files in specified directory from executed app directory
 example:
 
-        go-gist -cd [dirName]
+        go-gist -dir [dirName]
 
-'-cf' create gist from files in executed app directory
+'-f' create gist from files in executed app directory
 example:
 
-        go-gist -cf [file1] [file2]
+        go-gist -f [file1] [file2]
 
-'-cfm' create gist from files in executed app directory, merged into 1 gist
+'-fm' create gist from files in executed app directory, merged into 1 gist
 example:
 
-        go-gist -cfm [file1] [file2]
+        go-gist -fm [file1] [file2]
 
-'-cc' create gist from clipboard
+'-c' create gist from clipboard
 example:
 
-        go-gist -cc [fileName (optional)]
+        go-gist -c [fileName (optional)]
 
 '-d' delete remote gist
 example:
 
         go-gist -d [gistId]
 
-'-c' save created gist id and url to clipboard
+'-s' save created gist id and url to clipboard
 example:
 
-        go-gist -c -cf [file1]
+        go-gist -s -f [file1]
 
 ```
 
 ## Example
 
 ```bash
-go-gist -c -cf test.go
+go-gist -s -f test.go
 ```
 
 Output:
 
 ```bash
-➜ go run . -c -cf test.go
+go-gist -s -f test.go
+
 2021/12/08 22:40:18 Id: 4d67ace8ac028a515ced11e397681aed | Url: https://gist.github.com/4d67ace8ac028a515ced11e397681aed
 ```
 
@@ -73,7 +73,7 @@ Output:
 
 `.vimrc`:
 ```
-vnoremap <space>0 "+y :!go-gist -c -cc %<CR>
+vnoremap <space>0 "+y :!go-gist -s -c %<CR>
 ```
 
 - make sure you set `go-gist` folder in environment path  

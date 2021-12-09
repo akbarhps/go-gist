@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -12,6 +13,13 @@ var (
 	stateCreateFromFile       = "CREATE_FROM_FILE"
 	stateCreateFromFileMerged = "CREATE_FROM_FILE_MERGED"
 	stateCreateFromClipboard  = "CREATE_FROM_CLIPBOARD"
+
+	argCreateFromDir        = "-dir"
+	argCreateFromFile       = "-f"
+	argCreateFromFileMerged = "-fm"
+	argCreateFromClipboard  = "-c"
+	argSaveToClipboard      = "-s"
+	argDelete               = "-d"
 )
 
 type Args struct {
@@ -39,22 +47,22 @@ func parseArgs() *Args {
 
 		content := arg
 		switch arg {
-		case "-cf":
-			currentState = stateCreateFromFile
-			continue
-		case "-cfm":
-			currentState = stateCreateFromFileMerged
-			continue
-		case "-cd":
+		case argCreateFromDir:
 			currentState = stateCreateFromDir
 			continue
-		case "-cc":
+		case argCreateFromFile:
+			currentState = stateCreateFromFile
+			continue
+		case argCreateFromFileMerged:
+			currentState = stateCreateFromFileMerged
+			continue
+		case argCreateFromClipboard:
 			currentState = stateCreateFromClipboard
 			continue
-		case "-d":
+		case argDelete:
 			currentState = stateDelete
 			continue
-		case "-c":
+		case argSaveToClipboard:
 			args.SaveToClipboard = true
 			continue
 		}
@@ -68,38 +76,44 @@ func parseArgs() *Args {
 	}
 
 	if currentState == "" {
-		log.Fatal(`HELP:
-'-cd' create gist from files in specified directory from executed app directory
+		helpString := fmt.Sprintf(`HELP:
+'%s' create gist from files in specified directory from executed app directory
 example:
 
-	go-gist -cd [dirName]
+	go-gist %s [dirName]
 
-'-cf' create gist from files in executed app directory
+'%s' create gist from files in executed app directory
 example:
 
-	go-gist -cf [file1] [file2]
+	go-gist %s [file1] [file2]
 
-'-cfm' create gist from files in executed app directory, merged into 1 gist
+'%s' create gist from files in executed app directory, merged into 1 gist
 example:
 
-	go-gist -cfm [file1] [file2]
+	go-gist %s [file1] [file2]
 
-'-cc' create gist from clipboard
+'%s' create gist from clipboard
 example:
 
-	go-gist -f=[fileName (optional)] -cc
+	go-gist %s [fileName (optional)]
 
-'-d' delete remote gist
+'%s' delete remote gist
 example:
 
-	go-gist -d [gistId]
+	go-gist %s [gistId]
 
-'-c' save created gist id and url to clipboard
+'%s' save created gist id and url to clipboard
 example:
 	
-	go-gist -c -cf [file1]
+	go-gist %s -f [file1]
 
-`)
+`, argCreateFromDir, argCreateFromDir,
+			argCreateFromFile, argCreateFromFile,
+			argCreateFromFileMerged, argCreateFromFileMerged,
+			argCreateFromClipboard, argCreateFromClipboard,
+			argDelete, argDelete,
+			argSaveToClipboard, argSaveToClipboard)
+		log.Fatal(helpString)
 	}
 
 	return args

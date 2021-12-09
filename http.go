@@ -36,7 +36,7 @@ func Fetch(method string, url string, body io.Reader) ([]byte, error) {
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Authorization", "Token "+"add your token here")
+	req.Header.Add("Authorization", "Token "+config.Token)
 
 	client := &http.Client{}
 	response, err := client.Do(req)
